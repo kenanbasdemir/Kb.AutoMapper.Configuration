@@ -1,0 +1,20 @@
+{
+  "Members": [
+    {
+      "SourceType": "FunctionalTest.Models.Source, FunctionalTest",
+      "DestinationType": "FunctionalTest.Models.Destination, FunctionalTest",
+      "Mappings": [
+        {
+          "Source": "FirstName",
+          "Destination": "Name",
+          "Converter": "FunctionalTest.Resolvers.ToUpperCaseResolver, FunctionalTest"
+        },
+        {
+          "Source": "BirthDate",
+          "Destination": "DateOfBirth",
+          "Converter": "FunctionalTest.Converters.DateFormatConverter, FunctionalTest"
+        }
+      ]
+    }
+  ]
+}
