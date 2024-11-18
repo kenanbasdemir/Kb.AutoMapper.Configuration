@@ -7,9 +7,6 @@ public class ToUpperCaseResolver : IMemberValueResolver<Source, Destination, str
 {
     public string Resolve(Source source, Destination destination, string sourceMember, string destMember, ResolutionContext context)
     {
-        if (source.BirthDate.Year == 2024)
-            return sourceMember.ToUpper();
-
-        return sourceMember;
+        return sourceMember.ToUpper();
     }
 }

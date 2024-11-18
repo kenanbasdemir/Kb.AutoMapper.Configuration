@@ -17,8 +17,8 @@ public class ConfigurationProfileTest
 
         var mapperConfiguration = new MapperConfiguration(conf =>
         {
-            MappingConfig profile = JsonSerializer.Deserialize<MappingConfig>(configJson)!;
-            conf.AddProfile(new ConfigurationProfile(profile));
+            MappingConfig config = JsonSerializer.Deserialize<MappingConfig>(configJson)!;
+            conf.AddProfile(new ConfigurationProfile(config));
         });
 
         _mapper = mapperConfiguration.CreateMapper();

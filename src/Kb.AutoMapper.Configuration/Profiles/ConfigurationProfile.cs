@@ -6,7 +6,14 @@ public class ConfigurationProfile : Profile
 {
     public ConfigurationProfile(MappingConfig config)
     {
+        DefineMappingDefaults(config);
         CreateMemberMappings(config.Members);
+    }
+
+    private void DefineMappingDefaults(MappingConfig config)
+    {
+        AllowNullCollections = config.AllowNullCollections;
+        AllowNullDestinationValues = config.AllowNullDestinationValues;
     }
 
     private void CreateMemberMappings(IEnumerable<MappingMember> mappingMembers)
