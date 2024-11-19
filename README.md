@@ -2,6 +2,14 @@
 
 It is an unofficial mapping structure based on dynamic configuration prepared for AutoMapper.
 
+## Run
+
+```csharp
+
+dotnet test
+
+```
+
 ## Usage
 
 ```csharp
