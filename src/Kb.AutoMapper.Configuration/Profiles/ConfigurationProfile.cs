@@ -14,6 +14,11 @@ public class ConfigurationProfile : Profile
     {
         AllowNullCollections = config.AllowNullCollections;
         AllowNullDestinationValues = config.AllowNullDestinationValues;
+        
+        foreach (var ignoreMember in config.Ignores)
+        {
+            AddGlobalIgnore(ignoreMember);
+        }
     }
 
     private void CreateMemberMappings(IEnumerable<MappingMember> mappingMembers)

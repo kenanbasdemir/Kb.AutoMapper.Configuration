@@ -5,6 +5,8 @@ public class MappingConfig
     public bool? AllowNullCollections { get; set; }
     public bool? AllowNullDestinationValues { get; set; }
 
+    public IEnumerable<string> Ignores { get; set; } = Enumerable.Empty<string>();
+
     public IEnumerable<MappingMember> Members { get; set; } = Enumerable.Empty<MappingMember>();
 }
 
