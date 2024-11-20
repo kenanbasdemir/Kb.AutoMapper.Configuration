@@ -25,6 +25,4 @@ var mapperConfiguration = new MapperConfiguration(conf =>
   
 var mapper = mapperConfiguration.CreateMapper();
 
-var destination = mapper.Map<Destination>(new Source());
-
 ```
