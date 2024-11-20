@@ -15,6 +15,11 @@
           "Source": "BirthDate",
           "Destination": "DateOfBirth",
           "Converter": "FunctionalTest.Converters.DateFormatConverter, FunctionalTest"
+        },
+        {
+          "Source": "BirthDate",
+          "Destination": "Age",
+          "Converter": "FunctionalTest.Resolvers.AgeResolver, FunctionalTest"
         }
       ]
     }

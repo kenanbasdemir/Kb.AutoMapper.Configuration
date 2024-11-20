@@ -4,4 +4,5 @@ public class Destination
 {
     public string Name { get; set; }
     public string DateOfBirth { get; set; }
+    public int Age { get; set; }
 }

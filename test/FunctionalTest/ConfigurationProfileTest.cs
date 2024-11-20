@@ -27,15 +27,18 @@ public class ConfigurationProfileTest
     [Fact]
     public void Success()
     {
+        var birthDate = new DateTime(2000, 1, 1);
+
         var source = new Source()
         {
             FirstName = "Kenan",
-            BirthDate = DateTime.Now,
+            BirthDate = birthDate,
         };
 
         Destination destination = _mapper.Map<Destination>(source);
 
         Assert.Equal("KENAN", destination.Name);
-        Assert.Equal(DateTime.Now.ToString("yyyy-MM-dd"), destination.DateOfBirth);
+        Assert.Equal(birthDate.ToString("yyyy-MM-dd"), destination.DateOfBirth);
+        Assert.Equal(DateTime.Now.Year - birthDate.Year, destination.Age);
     }
 }
