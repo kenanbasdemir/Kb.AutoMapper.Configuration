@@ -1,6 +1,11 @@
 {
   "AllowNullCollections": null,
   "AllowNullDestinationValues": null,
+
+  "Ignores": [
+    "Id"
+  ],
+
   "Members": [
     {
       "SourceType": "FunctionalTest.Models.Source, FunctionalTest",

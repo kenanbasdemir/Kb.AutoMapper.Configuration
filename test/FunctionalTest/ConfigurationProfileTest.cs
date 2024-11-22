@@ -25,7 +25,7 @@ public class ConfigurationProfileTest
     }
 
     [Fact]
-    public void Success()
+    public void SuccessNewInstance()
     {
         var birthDate = new DateTime(2000, 1, 1);
 
@@ -37,6 +37,31 @@ public class ConfigurationProfileTest
 
         Destination destination = _mapper.Map<Destination>(source);
 
+        Assert.Equal("KENAN", destination.Name);
+        Assert.Equal(birthDate.ToString("yyyy-MM-dd"), destination.DateOfBirth);
+        Assert.Equal(DateTime.Now.Year - birthDate.Year, destination.Age);
+    }
+
+    [Fact]
+    public void SuccessAlreadyInstance()
+    {
+        var birthDate = new DateTime(2000, 1, 1);
+
+        var source = new Source()
+        {
+            Id = 1,
+            FirstName = "Kenan",
+            BirthDate = birthDate,
+        };
+
+        Destination destination = new Destination()
+        {
+            Id = 2
+        };
+
+        _mapper.Map(source, destination);
+
+        Assert.Equal(2, destination.Id);
         Assert.Equal("KENAN", destination.Name);
         Assert.Equal(birthDate.ToString("yyyy-MM-dd"), destination.DateOfBirth);
         Assert.Equal(DateTime.Now.Year - birthDate.Year, destination.Age);
