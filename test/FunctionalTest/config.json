@@ -1,6 +1,6 @@
 {
-  "AllowNullCollections": null,
-  "AllowNullDestinationValues": null,
+  "AllowNullCollections": true,
+  "AllowNullDestinationValues": true,
 
   "Ignores": [
     "Id"
