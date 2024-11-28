@@ -2,7 +2,7 @@
   "AllowNullCollections": true,
   "AllowNullDestinationValues": true,
 
-  "Ignores": [
+  "GlobalIgnores": [
     "Id"
   ],
 
