@@ -4,6 +4,10 @@ namespace Kb.AutoMapper.Configuration.Profiles;
 
 public class ConfigurationProfile : Profile
 {
+    public ConfigurationProfile() : this(new())
+    {
+    }
+
     public ConfigurationProfile(MappingConfig config)
     {
         DefineMappingDefaults(config);
