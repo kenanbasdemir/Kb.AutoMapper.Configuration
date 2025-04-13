@@ -2,8 +2,10 @@
 
 public class MappingConfig
 {
+    public string ProfileName { get; set; }
     public bool? AllowNullCollections { get; set; }
     public bool? AllowNullDestinationValues { get; set; }
+    public bool DisableConstructorMapping { get; set; }
 
     public IEnumerable<string> GlobalIgnores { get; set; } = Enumerable.Empty<string>();
 

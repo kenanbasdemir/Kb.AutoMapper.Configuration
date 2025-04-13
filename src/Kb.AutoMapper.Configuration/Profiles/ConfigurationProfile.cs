@@ -4,11 +4,14 @@ namespace Kb.AutoMapper.Configuration.Profiles;
 
 public class ConfigurationProfile : Profile
 {
-    public ConfigurationProfile() : this(new())
+    public ConfigurationProfile() : this(new MappingConfig())
     {
     }
 
     public ConfigurationProfile(MappingConfig config)
+        : base(!string.IsNullOrWhiteSpace(config.ProfileName)
+              ? config.ProfileName 
+              : nameof(ConfigurationProfile))
     {
         DefineMappingDefaults(config);
         CreateMemberMappings(config.Members);
@@ -18,7 +21,10 @@ public class ConfigurationProfile : Profile
     {
         AllowNullCollections = config.AllowNullCollections;
         AllowNullDestinationValues = config.AllowNullDestinationValues;
-        
+
+        if (config.DisableConstructorMapping)
+            DisableConstructorMapping();
+
         foreach (var ignoreMember in config.GlobalIgnores)
         {
             AddGlobalIgnore(ignoreMember);
@@ -48,17 +54,15 @@ public class ConfigurationProfile : Profile
             var sourceProperty = GetPropertyByNameIgnoreCase(sourceType, mapping.Source);
             var destinationProperty = GetPropertyByNameIgnoreCase(destinationType, mapping.Destination);
 
-            var converterType = Type.GetType(mapping.Converter);
-
-            if (!string.IsNullOrWhiteSpace(mapping.Converter) && converterType is null)
-                throw new InvalidOperationException($"Invalid converter type. Value: {mapping.Converter}");
+            var converterType = Type.GetType(mapping.Converter)
+                ?? throw new InvalidOperationException($"Invalid converter type. Value: {mapping.Converter}");
 
             mapExpression.ForMember(destinationProperty, opt =>
             {
-                if (converterType is not null && IsValueConverter(converterType))
+                if (IsValueConverter(converterType))
                     opt.ConvertUsing(converterType, sourceProperty);
 
-                else if (converterType is not null && IsMemberValueResolver(converterType))
+                else if (IsMemberValueResolver(converterType))
                     opt.MapFrom(valueResolverType: converterType, sourceMemberName: sourceProperty);
 
                 else
@@ -67,14 +71,14 @@ public class ConfigurationProfile : Profile
         }
     }
 
-    private string GetPropertyByNameIgnoreCase(Type type, string propertyName)
+    private static string GetPropertyByNameIgnoreCase(Type type, string propertyName)
         => type.GetProperties()
                     .First(p => string.Equals(p.Name, propertyName, StringComparison.OrdinalIgnoreCase))!
                     .Name;
 
-    private bool IsValueConverter(Type type)
-        => type.GetInterface(typeof(IValueConverter<,>).Name) is not null;
+    private static bool IsValueConverter(Type? type)
+        => type?.GetInterface(typeof(IValueConverter<,>).Name) is not null;
 
-    private bool IsMemberValueResolver(Type type)
-        => type.GetInterface(typeof(IMemberValueResolver<,,,>).Name) is not null;
+    private static bool IsMemberValueResolver(Type? type)
+        => type?.GetInterface(typeof(IMemberValueResolver<,,,>).Name) is not null;
 }
