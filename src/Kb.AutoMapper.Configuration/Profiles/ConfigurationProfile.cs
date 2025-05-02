@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
+using Kb.AutoMapper.Configuration.Exceptions;
 
 namespace Kb.AutoMapper.Configuration.Profiles;
 
 public class ConfigurationProfile : Profile
 {
-    public ConfigurationProfile() : this(new MappingConfig())
-    {
-    }
-
     public ConfigurationProfile(MappingConfig config)
         : base(!string.IsNullOrWhiteSpace(config.ProfileName)
               ? config.ProfileName 
@@ -39,7 +36,7 @@ public class ConfigurationProfile : Profile
             var destinationType = Type.GetType(member.DestinationType);
 
             if (sourceType is null || destinationType is null)
-                throw new InvalidOperationException("Invalid source or destination type.");
+                throw new InvalidMappingTypeException(sourceType ?? destinationType!);
 
             CreateMap(sourceType, destinationType, member.Mappings);
         }
@@ -55,7 +52,7 @@ public class ConfigurationProfile : Profile
             var destinationProperty = GetPropertyByNameIgnoreCase(destinationType, mapping.Destination);
 
             var converterType = Type.GetType(mapping.Converter)
-                ?? throw new InvalidOperationException($"Invalid converter type. Value: {mapping.Converter}");
+                ?? throw new InvalidConverterTypeException(mapping.Converter);
 
             mapExpression.ForMember(destinationProperty, opt =>
             {
